@@ -26,14 +26,7 @@ buttonFrame.pack(fill=BOTH)
 
 
 #labels of fields
-#HPLabel = Label(labelFrame, text='HP')
-#HPLabel.pack(side = RIGHT)
-#defLabel = Label(labelFrame, text='Defend')
-#defLabel.pack(side = RIGHT)
-#attLabel = Label(labelFrame, text='Attack')
-#attLabel.pack(side = RIGHT)
-#temp instructions
-tempLabel = Label(labelFrame, text='Please enter: Name/Attack/Defence/HP')
+tempLabel = Label(labelFrame, text='Please enter: Name/Class/Attack/Defence/HP')
 tempLabel.pack()
 
 #name 1 for the first contestant
@@ -41,6 +34,10 @@ name1Label = Label(topNameFrame, text='Combatant 1:')
 name1Label.pack(side = LEFT)
 name1 = Entry(topNameFrame, bd =5)
 name1.pack(side = LEFT)
+class1 = StringVar()
+class1.set('None')
+classDrop1 = OptionMenu(topNameFrame,class1,'None','Reaver','Seeker','Inquisitor')
+classDrop1.pack(side = LEFT)
 attStat1 = Entry(topNameFrame, bd =5)
 attStat1.pack(side = LEFT)
 defStat1 = Entry(topNameFrame, bd =5)
@@ -53,6 +50,10 @@ name2Label = Label(bottomNameFrame, text='Combatant 2:')
 name2Label.pack(side = LEFT)
 name2 = Entry(bottomNameFrame, bd =5)
 name2.pack(side = LEFT)
+class2 = StringVar()
+class2.set('None')
+classDrop2 = OptionMenu(bottomNameFrame,class2,'None','Reaver','Seeker','Inquisitor')
+classDrop2.pack(side = LEFT)
 attStat2 = Entry(bottomNameFrame, bd =5)
 attStat2.pack(side = LEFT)
 defStat2 = Entry(bottomNameFrame, bd =5)
@@ -79,10 +80,10 @@ def fight(SpaceNinjaWizard1, SpaceNinjaWizard2):
     wins = 0
     draws = 0
     loss = 0
-    noIterations = 1000
+    noIterations = 10000
     for i in range(noIterations):
-        spaceNinja1 = SpaceNinjaSystems.SpaceNinja(SpaceNinjaWizard1.hp,SpaceNinjaWizard1.att,SpaceNinjaWizard1.defence,SpaceNinjaWizard1.crit,0,SpaceNinjaWizard1.styleName)
-        spaceNinja2 = SpaceNinjaSystems.SpaceNinja(SpaceNinjaWizard2.hp,SpaceNinjaWizard2.att,SpaceNinjaWizard2.defence,SpaceNinjaWizard2.crit,0,SpaceNinjaWizard2.styleName)
+        spaceNinja1 = SpaceNinjaSystems.SpaceNinja(SpaceNinjaWizard1.hp,SpaceNinjaWizard1.att,SpaceNinjaWizard1.defence,SpaceNinjaWizard1.crit,0,SpaceNinjaWizard1.styleName,SpaceNinjaWizard1.rank)
+        spaceNinja2 = SpaceNinjaSystems.SpaceNinja(SpaceNinjaWizard2.hp,SpaceNinjaWizard2.att,SpaceNinjaWizard2.defence,SpaceNinjaWizard2.crit,0,SpaceNinjaWizard2.styleName,SpaceNinjaWizard2.rank)
         result = SpaceNinjaSystems.fight(spaceNinja1, spaceNinja2)
         if result == 1:
             wins += 1
@@ -116,7 +117,6 @@ def Analyze():
         tkMessageBox.showinfo( "Error", "The First combatants Defence stat is invalid")
         return
     try:
-        print(hpStat1.get())
         firstHp = int(hpStat1.get())
     except ValueError:
         tkMessageBox.showinfo( "Error", "The First combatants Hp stat is invalid")
@@ -138,10 +138,31 @@ def Analyze():
         return
     firstName = name1.get()
     secondName = name2.get()
+    firstCrit = 20
+    secondCrit = 20
+    firstClass = class1.get()
+    secondClass = class2.get()
+    #Find class, adjust values accordingly 'Reaver','Seeker','Inquisitor')
+    if firstClass == 'Reaver':
+        firstHp += 1
+    elif firstClass == 'Seeker':
+        firstHp += 1
+    elif firstClass == 'Inquisitor':
+        firstCrit -= 2
+
+    if secondClass == 'Reaver':
+        secondHp += 1
+    elif secondClass == 'Seeker':
+        secondHp += 1
+    elif secondClass == 'Inquisitor':
+        secondCrit -= 2        
+    #TOTO: needs to be moved out to class, but class needs to be made oop first  
+
     
+
     #lets make some SpaceNinjas!
-    player1 = SpaceNinjaSystems.SpaceNinja(firstHp,firstAttStat,firstDefStat,20,0,firstName)
-    player2 = SpaceNinjaSystems.SpaceNinja(secondHp,secondAttStat,secondDefStat,20,0,secondName)
+    player1 = SpaceNinjaSystems.SpaceNinja(firstHp,firstAttStat,firstDefStat,firstCrit,0,firstName,firstClass)
+    player2 = SpaceNinjaSystems.SpaceNinja(secondHp,secondAttStat,secondDefStat,secondCrit,0,secondName,secondClass)
     #player1 = SpaceNinjaSystems.SpaceNinja(0,0,0,20,0,firstName)
     #player2 = SpaceNinjaSystems.SpaceNinja(0,0,0,20,0,secondName)
     
