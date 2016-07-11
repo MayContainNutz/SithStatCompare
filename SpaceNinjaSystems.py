@@ -2,7 +2,7 @@ import random
 import copy
 
 class SpaceNinja:
-    def __init__(self, hp, attack, defence, lowestCrit, initiative, styleName):
+    def __init__(self, hp, attack, defence, lowestCrit, initiative, styleName, rank):
         self.hp = hp
         self.currHp = hp
         self.att = attack
@@ -10,6 +10,7 @@ class SpaceNinja:
         self.crit = lowestCrit
         self.initiative = initiative
         self.styleName = styleName
+        self.rank = rank
 
     def resetHp(self):
         self.currHp = self.hp
@@ -20,11 +21,10 @@ def fight(First_SpaceNinja, Second_SpaceNinja):
     #so first ini some ninjas
     SpaceNinja_First = First_SpaceNinja
     SpaceNinja_Second = Second_SpaceNinja
-    attackeris = 0
+    attackeris = 0   
     #since attack/defence is a coin flipper-roo
     #coin flip(initiative)
     #winner goes first
-
     while 1==1:
         first_initiative = random.randint(1,20) + SpaceNinja_First.initiative
         second_initiaitve = random.randint(1,20) + SpaceNinja_Second.initiative
