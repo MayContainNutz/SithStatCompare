@@ -66,11 +66,11 @@ hpStat2.pack(side = LEFT)
 name1.insert(0,"Name")
 attStat1.insert(0,"Attack")
 defStat1.insert(0,"Defence")
-hpStat1.insert(0,"Hit Points")
+hpStat1.insert(0,"Hit Points(Before Reaver bonus)")
 name2.insert(0,"Name")
 attStat2.insert(0,"Attack")
 defStat2.insert(0,"Defence")
-hpStat2.insert(0,"Hit Points")
+hpStat2.insert(0,"Hit Points(Before Reaver bonus)")
 
 
 
@@ -144,18 +144,22 @@ def Analyze():
     secondClass = class2.get()
     #Find class, adjust values accordingly 'Reaver','Seeker','Inquisitor')
     if firstClass == 'Reaver':
-        firstHp += 1
+        s = firstHp / 5
+        firstHp += s
     elif firstClass == 'Seeker':
-        firstHp += 1
+        s = firstHp / 5
+        firstHp += s
     elif firstClass == 'Inquisitor':
         firstCrit -= 2
 
     if secondClass == 'Reaver':
-        secondHp += 1
+        s = secondHp / 5
+        secondHp += s
     elif secondClass == 'Seeker':
-        secondHp += 1
+        s = secondHp / 5
+        secondHp += s
     elif secondClass == 'Inquisitor':
-        secondCrit -= 2        
+        secondCrit -= 1        
     #TOTO: needs to be moved out to class, but class needs to be made oop first  
 
     
